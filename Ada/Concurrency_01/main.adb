@@ -24,11 +24,5 @@ begin
       end if;
       delay WorkerEmploymentTime;
    end loop;
-   --  TODO LIST:
-   --  1. Table of workers, each of them starts after delay time ` DONE!
-   --  2. Random breaks after creating new tasks by chairman       DONE!
-   --  3. Config file                                              DONE!
-   --  4. Implement second mode (interaction with user)
-   --  5. Third server (entry with taskList and productList)       DONE!
    null;
 end Main;
