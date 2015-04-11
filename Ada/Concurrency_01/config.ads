@@ -24,11 +24,11 @@
 
 package config is
 
-   NumberOfWorkers : constant Integer := 20;
-   MaximalTaskVectorSize : constant Integer := 5;
+   NumberOfWorkers : constant Integer := 3;
+   MaximalTaskVectorSize : constant Integer := 8;
    MaximalProductVectorSize : constant Integer := 5;
    WorkersGoingToWorkTime : constant Standard.Duration := 2.0;
-   WorkersBreak : constant Standard.Duration := 1.0;
+   WorkersBreak : constant Standard.Duration := 3.0;
    CustomerGoingToStoreTime : constant Standard.Duration := 5.0;
    CustomerBreak : constant Standard.Duration := 1.0;
    WorkerEmploymentTime : constant Standard.Duration := 3.0;

@@ -25,11 +25,11 @@ package body servers is
                   Count := Count - 1;
                end PopTask;
          or
-            accept TasksStatus (tasksInVector : in out Integer;
-                                createdTasksTotal : in out Integer) do
-               tasksInVector := Count;
-               createdTasksTotal := CreatedTasksTotal;
-            end TasksStatus;
+              when CreatedTasksTotal > 5 =>
+               accept TasksStatus (tasksReport : in out TaskReportPointer) do
+                  tasksReport := CreateTaskReport(CreatedTasksTotal, Count,
+                                                  TaskVector.Copy(Source   => Tasks));
+               end TasksStatus;
          end select;
       end loop;
    end TaskServer;
@@ -61,13 +61,11 @@ package body servers is
                   BoughtProductsTotal := BoughtProductsTotal + 1;
                end PopProduct;
          or
-            accept ProductsStatus (productsInVector : in out Integer;
-                                   createdProductsTotal : in out Integer;
-                                   boughtProductsTotal : in out Integer) do
-               productsInVector := Count;
-               createdProductsTotal := CreatedProductsTotal;
-               boughtProductsTotal := BoughtProductsTotal;
-            end ProductsStatus;
+            when CreatedProductsTotal > 5 =>
+               accept ProductsStatus (productsReport : in out ProductReportPointer) do
+                  productsReport := CreateProductReport(CreatedProductsTotal, Count,
+                                                       ProductVector.Copy(Source   => Products));
+               end ProductsStatus;
          end select;
       end loop;
    end ProductServer;

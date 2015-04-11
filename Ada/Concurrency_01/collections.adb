@@ -35,5 +35,32 @@ package body collections is
       return tempProduct;
    end CreateProduct;
 
+   function CreateTaskReport (createdTaskCount : in Integer;
+                              vectorCount : in Integer;
+                              tasksVector : in TaskVector.Vector)
+                              return TaskReportPointer is
+      tempReport : TaskReportPointer;
+      totalCount : Integer;
+   begin
+      totalCount := createdTaskCount;
+      tempReport := new TaskReport'(CreatedTasksCount => createdTaskCount,
+                                    VectorCount       => vectorCount,
+                                    TasksVector       => tasksVector);
+      return tempReport;
+   end CreateTaskReport;
+
+   function CreateProductReport (createdProductCount : in Integer;
+                                 vectorCount : in Integer;
+                                 productsVector : in ProductVector.Vector)
+                                 return ProductReportPointer is
+      tempReport : ProductReportPointer;
+      totalCount : Integer;
+   begin
+      totalCount := createdProductCount;
+      tempReport := new ProductReport'(CreatedProductsCount => createdProductCount,
+                                       VectorCount          => vectorCount,
+                                       ProductsVector        => productsVector);
+      return tempReport;
+   end CreateProductReport;
 
 end collections;

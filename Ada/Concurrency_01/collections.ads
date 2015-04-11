@@ -25,7 +25,7 @@
 --
 -- Author : Adam Szerszen
 -- Index : 194133
---------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
 
 with Ada.Containers.Vectors;
 with config; use config;
@@ -66,4 +66,31 @@ package collections is
      (Index_Type   => ProductRange,
       Element_Type => ProductPointer);
 
+   type TaskReport;
+   type TaskReportPointer is access TaskReport;
+   type TaskReport is record
+
+      CreatedTasksCount : Integer;
+      VectorCount : Integer;
+      TasksVector : TaskVector.Vector;
+   end record;
+
+   function CreateTaskReport (createdTaskCount : in Integer;
+                             vectorCount : in Integer;
+                             tasksVector : in TaskVector.Vector)
+                             return TaskReportPointer;
+
+   type ProductReport;
+   type ProductReportPointer is access ProductReport;
+   type ProductReport is record
+
+      CreatedProductsCount : Integer;
+      VectorCount : Integer;
+      ProductsVector : ProductVector.Vector;
+   end record;
+
+   function CreateProductReport (createdProductCount : in Integer;
+                                 vectorCount : in Integer;
+                                 productsVector : in ProductVector.Vector)
+                                 return ProductReportPointer;
 end collections;

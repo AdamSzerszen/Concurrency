@@ -24,8 +24,7 @@ package servers is
    task type TaskServer is
       entry AddTask (taskToAdd : in TaskPointer);
       entry PopTask (popedTask : in out TaskPointer);
-      entry TasksStatus (tasksInVector : in out Integer;
-                        createdTasksTotal : in out Integer);
+      entry TasksStatus (tasksReport : in out TaskReportPointer);
    end TaskServer;
 
    type TaskServerPointer is access TaskServer;
@@ -33,9 +32,7 @@ package servers is
    task type ProductServer is
       entry AddProduct (productToAdd : in ProductPointer);
       entry PopProduct (popedProduct : in out ProductPointer);
-      entry ProductsStatus (productsInVector : in out Integer;
-                            createdProductsTotal : in out Integer;
-                            boughtProductsTotal : in out Integer);
+      entry ProductsStatus (productsReport : in out ProductReportPointer);
    end ProductServer;
 
    type ProductServerPointer is access ProductServer;

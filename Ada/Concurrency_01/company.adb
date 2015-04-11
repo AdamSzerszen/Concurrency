@@ -104,11 +104,8 @@ package body company is
    task body TaxOffice is
       RawCommand : String(1 ..1);
       Command : Integer := 0;
-      dataOne : Integer := 0;
-      dataTwo : Integer := 0;
-      dataThree : Integer := 0;
-      dataFour : Integer := 0;
-      dataFive : Integer := 0;
+      taskReport : TaskReportPointer;
+      productReport : ProductReportPointer;
       Last : Integer;
    begin
       if CompanyTalkative = False then
@@ -118,35 +115,61 @@ package body company is
             Put_Line("2 : Show number of tasks created in total");
             Put_Line("3 : Show number of products waiting in vector");
             Put_Line("4 : Show number of products created in total");
-            Put_Line("5 : Show number of products bought in total");
 
-
-            taskServer.TasksStatus(dataOne, dataTwo);
-            productServer.ProductsStatus(dataThree, dataFour, dataFive);
             Get_Line(RawCommand, Last);
+            taskServer.TasksStatus(taskReport);
+            productServer.ProductsStatus(productReport);
             Command := Integer'Value(RawCommand);
             if Command = 1 then
                Put("Number of tasks waiting in vector: ");
-               Put_Line(Integer'Image(dataOne));
+               Put_Line(Integer'Image(taskReport.VectorCount));
+               if taskReport.VectorCount > 0 then
+                  for i in 1 .. taskReport.VectorCount loop
+                     Put(Integer'Image(taskReport.TasksVector.Element(Index => i).ParamA));
+                     if taskReport.TasksVector.Element(Index => i).Operator = 0 then
+                        Put(" + ");
+                     end if;
+                     if taskReport.TasksVector.Element(Index => i).Operator = 1 then
+                        Put(" - ");
+                     end if;
+                     if taskReport.TasksVector.Element(Index => i).Operator = 2 then
+                        Put(" * ");
+                     end if;
+                     Put_Line(Integer'Image(taskReport.TasksVector.Element(Index => i).ParamB));
+                  end loop;
+               end if;
             end if;
             if Command = 2 then
                Put("Number of tasks created in total: ");
-               Put_Line(Integer'Image(dataTwo));
+               Put_Line(Integer'Image(taskReport.CreatedTasksCount));
             end if;
             if Command = 3 then
                Put("Number of products waiting in vector: ");
-               Put_Line(Integer'Image(dataThree));
+               Put_Line(Integer'Image(productReport.VectorCount));
+               if productReport.VectorCount > 0 then
+                  for i in 1 .. productReport.VectorCount loop
+                     Put(Integer'Image(productReport.ProductsVector.Element(Index => i).ResolvedTask.ParamA));
+                     if productReport.ProductsVector.Element(Index => i).ResolvedTask.Operator = 0 then
+                        Put(" + ");
+                     end if;
+                     if productReport.ProductsVector.Element(Index => i).ResolvedTask.Operator = 1 then
+                        Put(" - ");
+                     end if;
+                     if productReport.ProductsVector.Element(Index => i).ResolvedTask.Operator = 2 then
+                        Put(" * ");
+                     end if;
+                     Put(Integer'Image(productReport.ProductsVector.Element(Index => i).ResolvedTask.ParamB));
+                     Put(" = ");
+                     Put_Line(Integer'Image(productReport.ProductsVector.Element(Index => i).Solution));
+                  end loop;
+               end if;
             end if;
             if Command = 4 then
                Put("Number of products created in total: ");
-               Put_Line(Integer'Image(dataFour));
-            end if;
-            if Command = 5 then
-               Put("Number of products bought in total: ");
-               Put_Line(Integer'Image(dataFive));
+               Put_Line(Integer'Image(productReport.CreatedProductsCount));
             end if;
             Command := 0;
-            delay TaxOfficerWorkTime;
+            --delay TaxOfficerWorkTime;
          end loop;
       end if;
    end TaxOffice;
